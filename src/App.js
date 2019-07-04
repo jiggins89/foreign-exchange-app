@@ -6,12 +6,7 @@ import Search from "./components/search";
 import Result from "./components/Result";
 
 class App extends React.Component {
-  // let amount = document.querySelector("input").value;
-  constructor(props) {
-    super(props);
-
-    this.state = { userInput: 1, result: null };
-  }
+  state = { userInput: 1, result: null };
 
   apiCall = async userInput => {
     userInput.preventDefault();
