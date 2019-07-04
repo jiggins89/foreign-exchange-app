@@ -1,26 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import Axios from "axios";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  // let amount = document.querySelector("input").value;
+  constructor(props) {
+    super(props);
+
+    this.state = { userInput: 1, results: {} };
+  }
+
+  apiCall = userInput => {
+    userInput.preventDefault();
+    console.log("working?");
+    Axios.get(
+      `https://us-central1-capco-243515.cloudfunctions.net/front-end-test-api/?amount=${this.state.userInput}`
+    )
+      .then(function(response) {
+        console.log("then?");
+        this.setState({ results: response });
+      })
+      .catch(function(error) {
+        console.log("not good!", error);
+      });
+  };
+
+  render() {
+    console.log(this.state);
+    return (
+      <div className="ui container">
+        <h1>Currency Exchanger</h1>
+        <div className="ui form">
+          <label>Enter amount:</label>
+          <form onSubmit={this.apiCall}>
+            <input type="text" />
+            <button>Submit</button>
+          </form>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default App;
